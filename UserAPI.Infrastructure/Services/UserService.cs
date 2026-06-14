@@ -1,0 +1,113 @@
+﻿using AutoMapper;
+using AutoMapper;
+using DemoApp.Application.DTOs.User;
+using DemoApp.Application.Interfaces;
+using DemoApp.Domain.Entities;
+using DemoApp.Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DemoApp.Infrastructure.Services
+{
+    public class UserService : IUserService
+    {
+        private readonly IUserRepository _repository;
+        private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public UserService(
+            IUserRepository repository,
+            IMapper mapper,
+            IHttpContextAccessor httpContextAccessor)
+        {
+            _repository = repository;
+            _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public async Task<List<UserResponseDto>> GetAllAsync()
+        {
+            var ownerId = _httpContextAccessor?.HttpContext?.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(ownerId))
+                return new List<UserResponseDto>();
+
+            var users = await _repository.GetAllByOwnerAsync(ownerId);
+            return _mapper.Map<List<UserResponseDto>>(users);
+        }
+
+        public async Task<UserResponseDto?> GetByIdAsync(Guid id)
+        {
+            var ownerId = _httpContextAccessor?.HttpContext?.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(ownerId))
+                return null;
+
+            var user = await _repository.GetByIdAsync(id, ownerId);
+            if (user == null)
+                return null;
+
+            return _mapper.Map<UserResponseDto>(user);
+        }
+
+        public async Task<UserResponseDto> CreateAsync(CreateUserDto dto)
+        {
+            var user =
+                _mapper.Map<User>(dto);
+
+            user.Id = Guid.NewGuid();
+
+            user.CreatedDate = DateTime.UtcNow;
+
+            var ownerId = _httpContextAccessor?.HttpContext?.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(ownerId))
+                throw new UnauthorizedAccessException("User not authenticated");
+
+            user.OwnerId = ownerId;
+
+            await _repository.CreateAsync(user);
+
+            return _mapper.Map<UserResponseDto>(user);
+        }
+
+        public async Task<UserResponseDto?> UpdateAsync(
+            Guid id,
+            UpdateUserDto dto)
+        {
+            var ownerId = _httpContextAccessor?.HttpContext?.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(ownerId))
+                return null;
+
+            var existingUser = await _repository.GetByIdAsync(id, ownerId);
+            if (existingUser == null)
+                return null;
+
+            existingUser.Name = dto.Name;
+            existingUser.Age = dto.Age;
+            existingUser.City = dto.City;
+            existingUser.State = dto.State;
+            existingUser.Pincode = dto.Pincode;
+
+            await _repository.UpdateAsync(existingUser);
+
+            return _mapper.Map<UserResponseDto>(existingUser);
+        }
+
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var ownerId = _httpContextAccessor?.HttpContext?.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(ownerId))
+                return false;
+
+            var user = await _repository.GetByIdAsync(id, ownerId);
+            if (user == null)
+                return false;
+
+            await _repository.DeleteAsync(id);
+
+            return true;
+        }
+    }
+}

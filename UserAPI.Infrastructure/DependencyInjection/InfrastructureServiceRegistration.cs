@@ -1,0 +1,51 @@
+﻿using DemoApp.Application.Interfaces;
+using DemoApp.Domain.Interfaces;
+using DemoApp.Infrastructure.Repositories;
+using DemoApp.Infrastructure.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DemoApp.Infrastructure.DependencyInjection
+{
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using DemoApp.Infrastructure.Data;
+
+    public static class InfrastructureServiceRegistration
+    {
+        public static IServiceCollection
+            AddInfrastructureServices(
+                this IServiceCollection services,
+                Microsoft.Extensions.Configuration.IConfiguration configuration)
+        {
+            // Register DbContext with SQLite provider using connection string from configuration
+            services.AddDbContext<Data.ApplicationDbContext>(options =>
+                options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+
+            // Allow access to HttpContext for services that need the current user
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<
+                IUserRepository,
+                UserRepository>();
+
+            services.AddScoped<
+                IUserService,
+                UserService>();
+
+            services.AddScoped<
+                IAuthService,
+                AuthService>();
+
+            services.AddScoped<
+                ITokenService,
+                TokenService>();
+
+            return services;
+        }
+    }
+}
