@@ -1,0 +1,94 @@
+﻿using AutoMapper;
+using DemoApp.Application.DTOs.User;
+using DemoApp.Application.Interfaces;
+using DemoApp.Domain.Entities;
+using DemoApp.Domain.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DemoApp.Infrastructure.Services
+{
+    public class UserService : IUserService
+    {
+        private readonly IUserRepository _repository;
+        private readonly IMapper _mapper;
+
+        public UserService(
+            IUserRepository repository,
+            IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }
+
+        public async Task<List<UserResponseDto>> GetAllAsync()
+        {
+            var users =
+                await _repository.GetAllAsync();
+
+            return _mapper.Map<List<UserResponseDto>>(users);
+        }
+
+        public async Task<UserResponseDto?> GetByIdAsync(Guid id)
+        {
+            var user =
+                await _repository.GetByIdAsync(id);
+
+            if (user == null)
+                return null;
+
+            return _mapper.Map<UserResponseDto>(user);
+        }
+
+        public async Task<UserResponseDto> CreateAsync(CreateUserDto dto)
+        {
+            var user =
+                _mapper.Map<User>(dto);
+
+            user.Id = Guid.NewGuid();
+
+            user.CreatedDate = DateTime.UtcNow;
+
+            await _repository.CreateAsync(user);
+
+            return _mapper.Map<UserResponseDto>(user);
+        }
+
+        public async Task<UserResponseDto?> UpdateAsync(
+            Guid id,
+            UpdateUserDto dto)
+        {
+            var existingUser =
+                await _repository.GetByIdAsync(id);
+
+            if (existingUser == null)
+                return null;
+
+            existingUser.Name = dto.Name;
+            existingUser.Age = dto.Age;
+            existingUser.City = dto.City;
+            existingUser.State = dto.State;
+            existingUser.Pincode = dto.Pincode;
+
+            await _repository.UpdateAsync(existingUser);
+
+            return _mapper.Map<UserResponseDto>(existingUser);
+        }
+
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var user =
+                await _repository.GetByIdAsync(id);
+
+            if (user == null)
+                return false;
+
+            await _repository.DeleteAsync(id);
+
+            return true;
+        }
+    }
+}

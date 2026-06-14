@@ -1,0 +1,85 @@
+﻿using DemoApp.Application.DTOs.Auth;
+using DemoApp.Application.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DemoApp.Infrastructure.Services
+{
+    public class AuthService : IAuthService
+    {
+        private readonly UserManager<IdentityUser> _userManager;
+
+        private readonly ITokenService _tokenService;
+
+        public AuthService(
+            UserManager<IdentityUser> userManager,
+            ITokenService tokenService)
+        {
+            _userManager = userManager;
+            _tokenService = tokenService;
+        }
+
+        public async Task RegisterAsync(
+            RegisterRequest request)
+        {
+            var user = new IdentityUser
+            {
+                UserName = request.UserName,
+                Email = request.Email
+            };
+
+            var result =
+                await _userManager.CreateAsync(
+                    user,
+                    request.Password);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception(
+                    string.Join(
+                        ",",
+                        result.Errors.Select(x => x.Description)));
+            }
+        }
+
+        public async Task<AuthResponse> LoginAsync(
+            LoginRequest request)
+        {
+            var user =
+                await _userManager.FindByNameAsync(
+                    request.UserName);
+
+            if (user == null)
+                throw new Exception(
+                    "Invalid username or password");
+
+            var validPassword =
+                await _userManager.CheckPasswordAsync(
+                    user,
+                    request.Password);
+
+            if (!validPassword)
+                throw new Exception(
+                    "Invalid username or password");
+
+            var roles =
+                await _userManager.GetRolesAsync(user);
+
+            var token =
+                _tokenService.GenerateToken(
+                    user,
+                    roles);
+
+            return new AuthResponse
+            {
+                Token = token,
+                UserName = user.UserName!,
+                Expiry = DateTime.UtcNow.AddHours(1)
+            };
+        }
+    }
+}

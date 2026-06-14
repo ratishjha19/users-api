@@ -1,0 +1,39 @@
+﻿using DemoApp.Application.Interfaces;
+using DemoApp.Domain.Interfaces;
+using DemoApp.Infrastructure.Repositories;
+using DemoApp.Infrastructure.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DemoApp.Infrastructure.DependencyInjection
+{
+    public static class InfrastructureServiceRegistration
+    {
+        public static IServiceCollection
+            AddInfrastructureServices(
+                this IServiceCollection services)
+        {
+            services.AddScoped<
+                IUserRepository,
+                UserRepository>();
+
+            services.AddScoped<
+                IUserService,
+                UserService>();
+
+            services.AddScoped<
+                IAuthService,
+                AuthService>();
+
+            services.AddScoped<
+                ITokenService,
+                TokenService>();
+
+            return services;
+        }
+    }
+}

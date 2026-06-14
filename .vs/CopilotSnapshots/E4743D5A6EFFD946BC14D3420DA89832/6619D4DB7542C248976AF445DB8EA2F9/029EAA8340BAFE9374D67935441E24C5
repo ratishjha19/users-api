@@ -1,0 +1,205 @@
+﻿using DemoApp.API.Middleware;
+using DemoApp.Application.Mapping;
+using DemoApp.Infrastructure.Data;
+using DemoApp.Infrastructure.DependencyInjection;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
+using FluentValidation;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddInfrastructureServices(builder.Configuration);
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
+
+builder.Services.AddFluentValidationAutoValidation();
+// Register FluentValidation validators from the Application project so model validation runs
+builder.Services.AddValidatorsFromAssemblyContaining<DemoApp.Application.Validators.LoginRequestValidator>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+    };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var auth = context.Request.Headers["Authorization"].FirstOrDefault();
+            if (string.IsNullOrWhiteSpace(auth))
+                return Task.CompletedTask;
+
+            const string bearerPrefix = "Bearer ";
+            string tokenCandidate = auth;
+            if (auth.StartsWith(bearerPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                tokenCandidate = auth.Substring(bearerPrefix.Length).Trim();
+            }
+
+            if (tokenCandidate.Split('.').Length == 3)
+            {
+                // set the token for validation
+                context.Token = tokenCandidate;
+
+                // normalize header to include Bearer prefix when original header was raw token
+                if (!auth.StartsWith(bearerPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    try
+                    {
+                        context.Request.Headers["Authorization"] = bearerPrefix + tokenCandidate;
+                    }
+                    catch
+                    {
+                        // ignore if headers cannot be modified
+                    }
+                }
+            }
+
+            return Task.CompletedTask;
+        }
+    };
+});
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddAuthorization();
+
+// CORS - allow requests from the local frontend running on http://localhost:3000
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Localhost3000", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1",
+        new OpenApiInfo
+        {
+            Title = "DemoApp API",
+            Version = "v1"
+        });
+
+    options.AddSecurityDefinition("Token",
+        new OpenApiSecurityScheme
+        {
+            Description = "Enter JWT Token Only",
+            Name = "Authorization",
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.ApiKey
+        });
+
+    options.AddSecurityRequirement(
+        new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference =
+                        new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Token"
+                        }
+                },
+                Array.Empty<string>()
+            }
+        });
+});
+
+var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.MapControllers();
+// Seed roles and admin user at startup (create scope)
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+
+        // Ensure roles exist
+        var roles = new[] { "Reader", "Writer" };
+        foreach (var role in roles)
+        {
+            var exists = roleManager.RoleExistsAsync(role).GetAwaiter().GetResult();
+            if (!exists)
+            {
+                roleManager.CreateAsync(new IdentityRole(role)).GetAwaiter().GetResult();
+            }
+        }
+
+        // Ensure admin user exists
+        var adminEmail = "admin@gmail.com";
+        var admin = userManager.FindByEmailAsync(adminEmail).GetAwaiter().GetResult();
+        if (admin == null)
+        {
+            admin = new IdentityUser
+            {
+                UserName = adminEmail,
+                Email = adminEmail,
+                EmailConfirmed = true
+            };
+            var createResult = userManager.CreateAsync(admin, "admin@123").GetAwaiter().GetResult();
+            if (createResult.Succeeded)
+            {
+                userManager.AddToRolesAsync(admin, roles).GetAwaiter().GetResult();
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        // Log startup seeding errors
+        Console.Error.WriteLine("Error seeding roles/admin: " + ex);
+    }
+}
+
+app.Run();

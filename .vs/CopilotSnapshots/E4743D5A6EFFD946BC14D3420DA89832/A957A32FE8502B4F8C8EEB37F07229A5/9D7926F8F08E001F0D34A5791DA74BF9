@@ -1,0 +1,99 @@
+﻿using DemoApp.Application.DTOs.Auth;
+using DemoApp.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+
+namespace DemoApp.API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthController : ControllerBase
+    {
+    private readonly IAuthService _authService;
+    private readonly UserManager<Microsoft.AspNetCore.Identity.IdentityUser> _userManager;
+    private readonly RoleManager<Microsoft.AspNetCore.Identity.IdentityRole> _roleManager;
+
+    public AuthController(
+            IAuthService authService,
+            UserManager<IdentityUser> userManager,
+            RoleManager<Microsoft.AspNetCore.Identity.IdentityRole> roleManager)
+        {
+            _authService = authService;
+            _userManager = userManager;
+            _roleManager = roleManager;
+        }
+
+        [HttpPost("register")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(
+            RegisterRequest request)
+        {
+            try
+            {
+                // Create the user via the service
+                await _authService.RegisterAsync(request);
+
+                // Retrieve the created user
+                var user = await _userManager.FindByNameAsync(request.UserName);
+
+                if (user == null)
+                {
+                    return BadRequest(new { Error = "User creation failed." });
+                }
+
+                // Ensure the role exists
+                const string roleName = "Reader";
+                if (!await _roleManager.RoleExistsAsync(roleName))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+
+                // Add role to user (Reader)
+                var result = await _userManager.AddToRoleAsync(user, roleName);
+                if (result.Succeeded)
+                {
+                    return Ok(new { Message = "User Registered Successfully", Roles = await _userManager.GetRolesAsync(user) });
+                }
+                else
+                {
+                    if (result.Errors.Any())
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(error.Code, error.Description);
+                        }
+                    }
+
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(
+            LoginRequest request)
+        {
+            try
+            {
+                var response = await _authService.LoginAsync(request);
+
+                return Ok(response);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized(new { Message = "Invalid username or password" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+    }
+}
