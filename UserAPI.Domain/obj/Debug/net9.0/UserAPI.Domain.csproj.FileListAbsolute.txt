@@ -22,3 +22,16 @@ D:\TCS\TCS\UserAPI\UserAPI.Domain\obj\Debug\net9.0\UserAPI.Domain.dll
 D:\TCS\TCS\UserAPI\UserAPI.Domain\obj\Debug\net9.0\refint\UserAPI.Domain.dll
 D:\TCS\TCS\UserAPI\UserAPI.Domain\obj\Debug\net9.0\UserAPI.Domain.pdb
 D:\TCS\TCS\UserAPI\UserAPI.Domain\obj\Debug\net9.0\ref\UserAPI.Domain.dll
+C:\Users\amit9\Source\Repos\users-api\UserAPI.Domain\bin\Debug\net9.0\UserAPI.Domain.deps.json
+C:\Users\amit9\Source\Repos\users-api\UserAPI.Domain\bin\Debug\net9.0\UserAPI.Domain.dll
+C:\Users\amit9\Source\Repos\users-api\UserAPI.Domain\bin\Debug\net9.0\UserAPI.Domain.pdb
+C:\Users\amit9\Source\Repos\users-api\UserAPI.Domain\obj\Debug\net9.0\UserAPI.Domain.csproj.AssemblyReference.cache
+C:\Users\amit9\Source\Repos\users-api\UserAPI.Domain\obj\Debug\net9.0\UserAPI.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\amit9\Source\Repos\users-api\UserAPI.Domain\obj\Debug\net9.0\UserAPI.Domain.AssemblyInfoInputs.cache
+C:\Users\amit9\Source\Repos\users-api\UserAPI.Domain\obj\Debug\net9.0\UserAPI.Domain.AssemblyInfo.cs
+C:\Users\amit9\Source\Repos\users-api\UserAPI.Domain\obj\Debug\net9.0\UserAPI.Domain.csproj.CoreCompileInputs.cache
+C:\Users\amit9\Source\Repos\users-api\UserAPI.Domain\obj\Debug\net9.0\UserAPI.Domain.sourcelink.json
+C:\Users\amit9\Source\Repos\users-api\UserAPI.Domain\obj\Debug\net9.0\UserAPI.Domain.dll
+C:\Users\amit9\Source\Repos\users-api\UserAPI.Domain\obj\Debug\net9.0\refint\UserAPI.Domain.dll
+C:\Users\amit9\Source\Repos\users-api\UserAPI.Domain\obj\Debug\net9.0\UserAPI.Domain.pdb
+C:\Users\amit9\Source\Repos\users-api\UserAPI.Domain\obj\Debug\net9.0\ref\UserAPI.Domain.dll

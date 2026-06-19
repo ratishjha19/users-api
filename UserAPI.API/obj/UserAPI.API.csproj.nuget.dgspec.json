@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\TCS\\TCS\\UserAPI\\UserAPI.API\\UserAPI.API.csproj": {}
+    "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.API\\UserAPI.API.csproj": {}
   },
   "projects": {
-    "D:\\TCS\\TCS\\UserAPI\\UserAPI.API\\UserAPI.API.csproj": {
+    "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.API\\UserAPI.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\TCS\\TCS\\UserAPI\\UserAPI.API\\UserAPI.API.csproj",
+        "projectUniqueName": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.API\\UserAPI.API.csproj",
         "projectName": "UserAPI.API",
-        "projectPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.API\\UserAPI.API.csproj",
+        "projectPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.API\\UserAPI.API.csproj",
         "packagesPath": "C:\\Users\\amit9\\.nuget\\packages\\",
-        "outputPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.API\\obj\\",
+        "outputPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,11 +33,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\TCS\\TCS\\UserAPI\\UserAPI.Application\\UserAPI.Application.csproj": {
-                "projectPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Application\\UserAPI.Application.csproj"
+              "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Application\\UserAPI.Application.csproj": {
+                "projectPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Application\\UserAPI.Application.csproj"
               },
-              "D:\\TCS\\TCS\\UserAPI\\UserAPI.Infrastructure\\UserAPI.Infrastructure.csproj": {
-                "projectPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Infrastructure\\UserAPI.Infrastructure.csproj"
+              "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Infrastructure\\UserAPI.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Infrastructure\\UserAPI.Infrastructure.csproj"
               }
             }
           }
@@ -99,14 +99,14 @@
         }
       }
     },
-    "D:\\TCS\\TCS\\UserAPI\\UserAPI.Application\\UserAPI.Application.csproj": {
+    "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Application\\UserAPI.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Application\\UserAPI.Application.csproj",
+        "projectUniqueName": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Application\\UserAPI.Application.csproj",
         "projectName": "UserAPI.Application",
-        "projectPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Application\\UserAPI.Application.csproj",
+        "projectPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Application\\UserAPI.Application.csproj",
         "packagesPath": "C:\\Users\\amit9\\.nuget\\packages\\",
-        "outputPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Application\\obj\\",
+        "outputPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -128,8 +128,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\UserAPI.Domain.csproj": {
-                "projectPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\UserAPI.Domain.csproj"
+              "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\UserAPI.Domain.csproj": {
+                "projectPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\UserAPI.Domain.csproj"
               }
             }
           }
@@ -215,14 +215,14 @@
         }
       }
     },
-    "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\UserAPI.Domain.csproj": {
+    "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\UserAPI.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\UserAPI.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\UserAPI.Domain.csproj",
         "projectName": "UserAPI.Domain",
-        "projectPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\UserAPI.Domain.csproj",
+        "projectPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\UserAPI.Domain.csproj",
         "packagesPath": "C:\\Users\\amit9\\.nuget\\packages\\",
-        "outputPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\obj\\",
+        "outputPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -287,14 +287,14 @@
         }
       }
     },
-    "D:\\TCS\\TCS\\UserAPI\\UserAPI.Infrastructure\\UserAPI.Infrastructure.csproj": {
+    "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Infrastructure\\UserAPI.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Infrastructure\\UserAPI.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Infrastructure\\UserAPI.Infrastructure.csproj",
         "projectName": "UserAPI.Infrastructure",
-        "projectPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Infrastructure\\UserAPI.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Infrastructure\\UserAPI.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\amit9\\.nuget\\packages\\",
-        "outputPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -316,11 +316,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\TCS\\TCS\\UserAPI\\UserAPI.Application\\UserAPI.Application.csproj": {
-                "projectPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Application\\UserAPI.Application.csproj"
+              "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Application\\UserAPI.Application.csproj": {
+                "projectPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Application\\UserAPI.Application.csproj"
               },
-              "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\UserAPI.Domain.csproj": {
-                "projectPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\UserAPI.Domain.csproj"
+              "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\UserAPI.Domain.csproj": {
+                "projectPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\UserAPI.Domain.csproj"
               }
             }
           }

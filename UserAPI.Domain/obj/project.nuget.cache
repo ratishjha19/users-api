@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Fzo61qQwTcc=",
+  "dgSpecHash": "cnoJIbhhkDA=",
   "success": true,
-  "projectFilePath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\UserAPI.Domain.csproj",
+  "projectFilePath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\UserAPI.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\amit9\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\amit9\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512"
@@ -12,9 +12,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
-      "projectPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\UserAPI.Domain.csproj",
+      "projectPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\UserAPI.Domain.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\UserAPI.Domain.csproj",
+      "filePath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\UserAPI.Domain.csproj",
       "libraryId": "AutoMapper",
       "targetGraphs": [
         "net9.0"

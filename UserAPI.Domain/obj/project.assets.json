@@ -127,11 +127,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\UserAPI.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\UserAPI.Domain.csproj",
       "projectName": "UserAPI.Domain",
-      "projectPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\UserAPI.Domain.csproj",
+      "projectPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\UserAPI.Domain.csproj",
       "packagesPath": "C:\\Users\\amit9\\.nuget\\packages\\",
-      "outputPath": "D:\\TCS\\TCS\\UserAPI\\UserAPI.Domain\\obj\\",
+      "outputPath": "C:\\Users\\amit9\\Source\\Repos\\users-api\\UserAPI.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
